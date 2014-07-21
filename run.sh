@@ -11,10 +11,18 @@ input {
     file {
         type => "docker"
         path    => "$DOCKER_ROOT/*/*.log"
-        codec => "json"
+        codec   => "json"
     }
 }
 
+filter {
+    date {
+        match => [ "time", "ISO8601" ]    
+    }
+    grok {
+        match => ["path","%{GREEDYDATA}/%{GREEDYDATA:container}-json.log"]
+    }
+}
 output {
     elasticsearch {
         protocol => "http"
