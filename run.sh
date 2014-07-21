@@ -11,12 +11,7 @@ input {
     file {
         type => "docker"
         path    => "$DOCKER_ROOT/*/*.log"
-    }
-}
-
-filter {
-    json {
-        source => "log"
+        codec => "json"
     }
 }
 
